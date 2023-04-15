@@ -154,3 +154,22 @@ class Multiply extends Base {
         output.replaceChild(outTable, output.children[0])
     }
 }
+
+class Dot extends Base {
+    constructor() {
+        super();
+        this.matrixSizeInput();
+        this.matrixSizeInput();
+    }
+
+    calculate() {
+        let mat1 = super.getMatrix(0);
+        let mat2 = super.getMatrix(1);
+
+        let temp = 0;
+        for (let i=0; i<mat1.length; i++) temp += parseInt(mat1[i])*parseInt(mat2[i]);
+
+        let tempOutput = document.createElement("h2"); tempOutput.innerText = temp;
+        output.replaceChild(tempOutput, output.children[0]);
+    }
+}
