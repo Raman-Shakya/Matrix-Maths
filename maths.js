@@ -173,3 +173,47 @@ class Dot extends Base {
         output.replaceChild(tempOutput, output.children[0]);
     }
 }
+
+class Determinant extends Base {
+    constructor() {
+        super();
+        this.matrixSizeInput();
+    }
+
+    calculate() {
+        let mat1 = super.getMatrix(0);
+
+        let temp = determinant(mat1);
+        let tempOutput = document.createElement("h2"); tempOutput.innerText = temp;
+
+        output.replaceChild(tempOutput, output.children[0]);
+    }
+
+}
+
+function determinant(matrix) {
+    if (matrix.length == 1) return matrix[0][0];
+    if (matrix.length == 2) return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+
+    let sign = 1;
+    let det=0;
+    for (let i=0; i<matrix.length; i++) {
+        det += sign * matrix[i][0] * determinant(exceptIJMatrix(matrix, i,0));
+        sign *= -1;
+    }
+    return det;
+}
+
+function exceptIJMatrix(matrix, r, c) {
+    let ans = [];
+    for (let i=0; i<matrix.length; i++) {
+        let row = [];
+        if (i==r) continue
+        for (let j=0; j<matrix.length; j++) {
+            if (j==c) continue;
+            row.push(matrix[i][j]);
+        }
+        ans.push(row);
+    }
+    return ans;
+}

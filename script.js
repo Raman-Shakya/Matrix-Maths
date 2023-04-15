@@ -8,6 +8,7 @@ function dropDownChanged(element) {
         case "SUBTRACT": new Subtract(); break;
         case "MULTIPLY": new Multiply(); break;
         case "DOT": new Dot(); break;
+        case "DETERMINANT": new Determinant(); break;
     }
 }
 
