@@ -58,31 +58,13 @@ class Base {
         return matrix;
     }
 
-    calculate() {}
-}
-
-
-
-
-
-
-class Subtract extends Base {
-    constructor() {
-        super();
-        this.matrixSizeInput();
-        this.matrixSizeInput();
-    }
-
-    calculate() {
-        let mat1 = super.getMatrix(0);
-        let mat2 = super.getMatrix(1);
-
+    generateOutput(matrix) {
         let outTable = document.createElement("table");
-        for (let i=0; i<mat1.length; i++) {
+        for (let i=0; i<matrix.length; i++) {
             let tr = document.createElement("tr");
-            for (let j=0; j<mat1[0].length; j++) {
+            for (let j=0; j<matrix[0].length; j++) {
                 let td = document.createElement("td");
-                td.innerText = mat1[i][j] - mat2[i][j];
+                td.innerText = matrix[i][j];
                 tr.appendChild(td);
             }
             outTable.appendChild(tr);
@@ -90,7 +72,13 @@ class Subtract extends Base {
 
         output.replaceChild(outTable, output.children[0])
     }
+
+    calculate() {}
 }
+
+
+
+
 
 
 class Add extends Base {
@@ -103,19 +91,26 @@ class Add extends Base {
     calculate() {
         let mat1 = super.getMatrix(0);
         let mat2 = super.getMatrix(1);
+        let sum = add(mat1, mat2);
 
-        let outTable = document.createElement("table");
-        for (let i=0; i<mat1.length; i++) {
-            let tr = document.createElement("tr");
-            for (let j=0; j<mat1[0].length; j++) {
-                let td = document.createElement("td");
-                td.innerText = mat1[i][j] + mat2[i][j];
-                tr.appendChild(td);
-            }
-            outTable.appendChild(tr);
-        }
+        super.generateOutput(sum);
+    }
+}
 
-        output.replaceChild(outTable, output.children[0])
+
+class Subtract extends Base {
+    constructor() {
+        super();
+        this.matrixSizeInput();
+        this.matrixSizeInput();
+    }
+
+    calculate() {
+        let mat1 = super.getMatrix(0);
+        let mat2 = super.getMatrix(1);
+        let sum = subtract(mat1, mat2);
+
+        super.generateOutput(sum);
     }
 }
 
@@ -189,31 +184,4 @@ class Determinant extends Base {
         output.replaceChild(tempOutput, output.children[0]);
     }
 
-}
-
-function determinant(matrix) {
-    if (matrix.length == 1) return matrix[0][0];
-    if (matrix.length == 2) return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
-
-    let sign = 1;
-    let det=0;
-    for (let i=0; i<matrix.length; i++) {
-        det += sign * matrix[i][0] * determinant(exceptIJMatrix(matrix, i,0));
-        sign *= -1;
-    }
-    return det;
-}
-
-function exceptIJMatrix(matrix, r, c) {
-    let ans = [];
-    for (let i=0; i<matrix.length; i++) {
-        let row = [];
-        if (i==r) continue
-        for (let j=0; j<matrix.length; j++) {
-            if (j==c) continue;
-            row.push(matrix[i][j]);
-        }
-        ans.push(row);
-    }
-    return ans;
 }
